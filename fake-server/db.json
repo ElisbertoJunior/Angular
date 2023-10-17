@@ -1,16 +1,3 @@
 {
-  "list-food": [
-    {
-      "id": 1,
-      "name": "X-bacon"
-    },
-    {
-      "id": 2,
-      "name":"Pizza"
-    },
-    {
-      "id": 2,
-      "name": "Sushi"
-    }
-  ]
+  "list-food": []
 }
