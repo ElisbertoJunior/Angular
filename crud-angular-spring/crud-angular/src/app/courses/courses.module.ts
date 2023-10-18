@@ -14,7 +14,8 @@ import { CoursesComponent } from './courses/courses.component';
     CoursesRoutingModule,
     MatTableModule,
     MatCardModule,
-    MatToolbarModule
+    MatToolbarModule,
+
   ],
 })
 export class CoursesModule {}
