@@ -5,6 +5,6 @@ const PROXY_CONFIG = [
     secure: false,
     logLevel: 'debug'
   }
-]
+];
 
-module.exports = PROXY_CONFIG
+module.exports = PROXY_CONFIG;
