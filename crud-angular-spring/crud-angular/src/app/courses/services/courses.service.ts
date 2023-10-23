@@ -15,9 +15,15 @@ export class CoursesService {
   list(): Observable<Course[]> {
     return this.http.get<Course[]>(this.API).pipe(
       first(),
-      delay(2000),
+      //delay(2000),
       tap(courses => console.log(courses))
     )
+  }
+
+  save(record: Course) {
+    return this.http.post<Course>(this.API, record).pipe(
+      first()
+    );
   }
 
 }
