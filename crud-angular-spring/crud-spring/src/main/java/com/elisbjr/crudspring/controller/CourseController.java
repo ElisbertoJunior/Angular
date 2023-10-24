@@ -30,4 +30,14 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.addCourse(course));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Course> updateCourse(@RequestBody Course course, @PathVariable Long id) {
+        return ResponseEntity.ok().body(service.updateCourse(course, id));
+    }
 }

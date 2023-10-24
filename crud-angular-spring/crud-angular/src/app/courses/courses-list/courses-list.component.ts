@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../model/Course';
 import { ActivatedRoute, Router } from '@angular/router';
-import { outputAst } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-courses-list',
@@ -17,6 +17,9 @@ export class CoursesListComponent {
   @Output()
   add = new EventEmitter();
 
+  @Output()
+  edit = new EventEmitter<Course>();
+
 
   constructor(
     private router: Router,
@@ -27,6 +30,10 @@ export class CoursesListComponent {
 
   onAdd() {
     this.add.emit(true);
+  }
+
+  onEdit(course: Course) {
+    this.edit.emit(course);
   }
 
 }

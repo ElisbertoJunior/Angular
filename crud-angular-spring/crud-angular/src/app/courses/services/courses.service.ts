@@ -21,9 +21,29 @@ export class CoursesService {
   }
 
   save(record: Course) {
+
+    if(record.id) {
+      return this.update(record);
+    }
+
+    return this.create(record);
+  }
+
+  private create(record: Course) {
     return this.http.post<Course>(this.API, record).pipe(
       first()
     );
+
+  }
+
+  private update(record: Course) {
+    return this.http.put<Course>(`${this.API}/${record.id}`, record).pipe(
+      first()
+    );
+  }
+
+  loadById(id: number) {
+    return this.http.get<Course>(`${this.API}/${id}`);
   }
 
 }
