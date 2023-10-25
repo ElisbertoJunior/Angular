@@ -20,6 +20,9 @@ export class CoursesListComponent {
   @Output()
   edit = new EventEmitter<Course>();
 
+  @Output()
+  delete = new EventEmitter();
+
 
   constructor(
     private router: Router,
@@ -34,6 +37,10 @@ export class CoursesListComponent {
 
   onEdit(course: Course) {
     this.edit.emit(course);
+  }
+
+  onDelete(course: Course) {
+    this.delete.emit(course);
   }
 
 }

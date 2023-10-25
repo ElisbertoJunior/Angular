@@ -41,4 +41,9 @@ public class CourseService {
 
         return repository.save(currentCourse);
     }
+
+    public List<Course> deleteCourse(Long id) {
+         repository.deleteById(id);
+         return this.listAll();
+    }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../model/Course';
 import { HttpClient } from '@angular/common/http';
-import { Observable, delay, first, tap } from 'rxjs';
+import { Observable, catchError, delay, first, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +44,17 @@ export class CoursesService {
 
   loadById(id: number) {
     return this.http.get<Course>(`${this.API}/${id}`);
+  }
+
+  delete(record: Course) {
+
+    return this.http.delete(`${this.API}/${record.id}`).pipe(
+      first(),
+      catchError((error: any) => {
+        console.error('Erro ao excluir o curso:', error);
+        throw error;
+      })
+    );;
   }
 
 }
