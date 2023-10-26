@@ -6,6 +6,7 @@ import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/err
 
 import { CoursesService } from '../services/courses.service';
 import { Course } from './../model/Course';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-courses',
@@ -20,7 +21,8 @@ export class CoursesComponent implements OnInit {
     private courseService: CoursesService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
   ) {
     this.courses$ = courseService.list().pipe(
       catchError((error) => {
@@ -51,6 +53,9 @@ export class CoursesComponent implements OnInit {
   onDelete(course: Course) {
     this.courseService.delete(course).subscribe(() => {
       this.courses$ = this.courseService.list();
-    });
+      this.snackBar.open('Curso deletado com sucesso!', '', {duration: 5000})
+    },
+    error => this.onError("Erro ao tentar remover curso!")
+    );
   }
 }
