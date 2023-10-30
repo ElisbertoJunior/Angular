@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  NonNullableFormBuilder,
+  Validators,
+} from '@angular/forms';
 
 import { CoursesService } from '../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,11 +18,13 @@ import { Course } from '../model/Course';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-
   form: FormGroup = this.formBuilder.group({
     id: [],
-    name: [''],
-    category: ['']
+    name: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(100)],
+    ],
+    category: ['', [Validators.required]],
   });
 
   constructor(
@@ -26,18 +33,15 @@ export class CourseFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute
-  ) {
-
-  }
-
+  ) {}
 
   ngOnInit(): void {
     const course: Course = this.route.snapshot.data['course'];
     this.form.setValue({
       id: course.id,
       name: course.name,
-      category: course.category
-    })
+      category: course.category,
+    });
   }
 
   onSubmit() {
@@ -63,4 +67,25 @@ export class CourseFormComponent implements OnInit {
   private onError() {
     this.snackBar.open('Erro ao salvar curso', '', { duration: 5000 });
   }
+
+  getErrorMessage(fieldName: string) {
+    const field = this.form.get(fieldName);
+
+    if (field?.hasError('required')){
+      return 'Campo obrigatorio!'
+    }
+
+    if(field?.hasError('minlength')) {
+      const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5;
+      return `Campo precisa ter no minimo ${requiredLength} caracteres.`
+    }
+
+    if(field?.hasError('maxlength')) {
+      const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
+      return `Tamanho maximo exedido de ${requiredLength} caracteres.`
+    }
+
+    return 'Campo invalido!'
+  }
+
 }
